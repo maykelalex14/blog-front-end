@@ -193,6 +193,15 @@ const Navbar: React.FC = () => {
               <StyledNavLink to="/dashboard/manager/feedback">Feedback</StyledNavLink>
             </>
           )}
+          {/* CASHIER: Show all cashier dashboard pages as separate links */}
+          {user?.role === 'cashier' && !isAdmin && (
+            <>
+              <StyledNavLink to="/menu">Menu</StyledNavLink>
+              <StyledNavLink to="/dashboard/cashier/orders">Order Management</StyledNavLink>
+              <StyledNavLink to="/dashboard/cashier/payment">Payment Processing</StyledNavLink>
+              <StyledNavLink to="/dashboard/cashier/kitchen">Kitchen Queue</StyledNavLink>
+            </>
+          )}
           {/* ADMIN: Only admin management/configuration/reporting links */}
           {isAdmin && (
             <>

@@ -20,12 +20,12 @@ interface MenuContextType {
 }
 
 const initialMenu: MenuItem[] = [
-  { id: 1, name: 'Ribeye Steak', desc: 'Juicy, marbled, flame-grilled perfection.', price: 38, img: '/menu/ribeye.jpg', category: 'Main', available: true },
-  { id: 2, name: 'Filet Mignon', desc: 'Tenderloin, melt-in-your-mouth, classic.', price: 42, img: '/menu/filet.jpg', category: 'Main', available: true },
-  { id: 3, name: 'NY Strip', desc: 'Bold, beefy, expertly seasoned.', price: 36, img: '/menu/nystrip.jpg', category: 'Main', available: false },
+  { id: 1, name: 'Ribeye Steak', desc: 'Juicy, marbled, flame-grilled perfection.', price: 38, img: '/menu/ribeyesteak.jpg', category: 'Main', available: true },
+  { id: 2, name: 'Filet Mignon', desc: 'Tenderloin, melt-in-your-mouth, classic.', price: 42, img: '/menu/filetmignon.jpg', category: 'Main', available: true },
+  { id: 3, name: 'NY Strip', desc: 'Bold, beefy, expertly seasoned.', price: 36, img: '/menu/NYstripe.jpg', category: 'Main', available: false },
   { id: 4, name: 'Wagyu Burger', desc: 'Premium beef, aged cheddar, brioche bun.', price: 24, img: '/menu/burger.jpg', category: 'Main', available: true },
-  { id: 5, name: 'Truffle Fries', desc: 'Hand-cut, parmesan, truffle oil.', price: 12, img: '/menu/fries.jpg', category: 'Sides', available: true },
-  { id: 6, name: 'Caesar Salad', desc: 'Crisp romaine, house dressing, croutons.', price: 14, img: '/menu/salad.jpg', category: 'Sides', available: true },
+  { id: 5, name: 'Truffle Fries', desc: 'Hand-cut, parmesan, truffle oil.', price: 12, img: '/menu/trufflefries.jpeg', category: 'Sides', available: true },
+  { id: 6, name: 'Caesar Salad', desc: 'Crisp romaine, house dressing, croutons.', price: 14, img: '/menu/caesarsalad.jpg', category: 'Sides', available: true },
 ];
 
 export const MenuContext = createContext<MenuContextType>({
