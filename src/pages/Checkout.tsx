@@ -13,6 +13,12 @@ const Card = styled.div`
   padding: 40px 32px 32px 32px;
   max-width: 500px;
   margin: 48px auto;
+  @media (max-width: 700px) {
+    padding: 18px 4px 18px 4px;
+    max-width: 98vw;
+    margin: 12px 0;
+    border-radius: 8px;
+  }
 `;
 const Title = styled.h1`
   color: #222;
@@ -23,6 +29,10 @@ const Table = styled.table`
   width: 100%;
   margin-bottom: 18px;
   border-collapse: collapse;
+  font-size: 1rem;
+  @media (max-width: 700px) {
+    font-size: 0.92rem;
+  }
 `;
 const Th = styled.th`
   text-align: left;
@@ -44,6 +54,10 @@ const Input = styled.input`
   font-size: 1rem;
   margin-bottom: 12px;
   width: 100%;
+  @media (max-width: 700px) {
+    padding: 6px 8px;
+    font-size: 0.95rem;
+  }
 `;
 const Select = styled.select`
   padding: 8px 12px;
@@ -52,6 +66,10 @@ const Select = styled.select`
   font-size: 1rem;
   margin-bottom: 18px;
   width: 100%;
+  @media (max-width: 700px) {
+    padding: 6px 8px;
+    font-size: 0.95rem;
+  }
 `;
 const Button = styled.button`
   background: #b71c1c;
@@ -63,10 +81,13 @@ const Button = styled.button`
   font-weight: 600;
   cursor: pointer;
   margin-top: 8px;
-  width: 100%;
   transition: background 0.2s;
   &:hover {
     background: #7f1010;
+  }
+  @media (max-width: 700px) {
+    padding: 8px;
+    font-size: 0.95rem;
   }
 `;
 const SuccessMsg = styled.div`

@@ -13,6 +13,12 @@ const Card = styled.div`
   padding: 32px;
   max-width: 900px;
   margin: 32px auto;
+  @media (max-width: 700px) {
+    padding: 14px 2px 14px 2px;
+    max-width: 98vw;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
 `;
 const Review = styled.div`
   background: #f9f9f9;
@@ -20,6 +26,10 @@ const Review = styled.div`
   margin-bottom: 18px;
   padding: 18px 24px;
   color: #222;
+  @media (max-width: 700px) {
+    padding: 10px 6px;
+    font-size: 0.97em;
+  }
 `;
 const Button = styled.button`
   background: #b71c1c;
@@ -36,6 +46,11 @@ const Button = styled.button`
   &:hover {
     background: #e0b04b;
     color: #181818;
+  }
+  @media (max-width: 700px) {
+    padding: 7px 10px;
+    font-size: 0.97em;
+    margin-right: 6px;
   }
 `;
 

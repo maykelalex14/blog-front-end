@@ -10,6 +10,11 @@ const Container = styled.div`
   box-shadow: 0 2px 16px rgba(0,0,0,0.10);
   padding: 32px 40px 40px 40px;
   color: #fff;
+  @media (max-width: 700px) {
+    padding: 16px 4px 24px 4px;
+    margin: 12px 0;
+    border-radius: 8px;
+  }
 `;
 const Section = styled.section`
   margin-bottom: 40px;
@@ -20,6 +25,11 @@ const Table = styled.table`
   border-radius: 8px;
   margin-bottom: 18px;
   color: #fff;
+  font-size: 1rem;
+  @media (max-width: 700px) {
+    font-size: 0.92rem;
+    border-radius: 4px;
+  }
 `;
 const Th = styled.th`
   background: #b71c1c;
@@ -41,6 +51,10 @@ const Button = styled.button`
   margin-right: 8px;
   margin-bottom: 8px;
   &:hover { background: #b71c1c; color: #fff; }
+  @media (max-width: 700px) {
+    padding: 6px 10px;
+    font-size: 0.95rem;
+  }
 `;
 const Input = styled.input`
   padding: 8px;
@@ -48,6 +62,10 @@ const Input = styled.input`
   border: 1px solid #444;
   background: #181818;
   color: #fff;
+  @media (max-width: 700px) {
+    padding: 6px;
+    font-size: 0.95rem;
+  }
 `;
 const Select = styled.select`
   padding: 8px;
@@ -55,6 +73,10 @@ const Select = styled.select`
   border: 1px solid #444;
   background: #181818;
   color: #fff;
+  @media (max-width: 700px) {
+    padding: 6px;
+    font-size: 0.95rem;
+  }
 `;
 
 const mockManagers = [

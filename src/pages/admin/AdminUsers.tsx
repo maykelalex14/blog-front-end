@@ -12,6 +12,13 @@ const AdminContainer = styled.div`
   padding: 32px 40px 40px 40px;
   min-height: 60vh;
   color: #fff;
+
+  @media (max-width: 700px) {
+    padding: 16px 4px 24px 4px;
+    margin: 12px 0;
+    border-radius: 8px;
+    min-width: 0;
+  }
 `;
 
 const Title = styled.h1`
@@ -32,7 +39,14 @@ const AccessTable = styled.table`
   margin-top: 24px;
   overflow: hidden;
   color: #fff;
+  font-size: 1rem;
+
+  @media (max-width: 700px) {
+    font-size: 0.92rem;
+    border-radius: 4px;
+  }
 `;
+
 const Th = styled.th`
   background: #b71c1c;
   color: #fff;
@@ -49,6 +63,11 @@ const Input = styled.input`
   border: 1px solid #ccc;
   border-radius: 4px;
   flex: 1;
+
+  @media (max-width: 700px) {
+    padding: 7px;
+    font-size: 0.95rem;
+  }
 `;
 
 const Button = styled.button`
@@ -58,10 +77,10 @@ const Button = styled.button`
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
-  font-size: 1rem;
 
-  &:hover {
-    background: #d09f3d;
+  @media (max-width: 700px) {
+    padding: 7px 12px;
+    font-size: 0.95rem;
   }
 `;
 

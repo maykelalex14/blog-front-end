@@ -10,6 +10,13 @@ const AdminContainer = styled.div`
   padding: 32px 40px 40px 40px;
   min-height: 60vh;
   color: #fff;
+
+  @media (max-width: 700px) {
+    padding: 16px 4px 24px 4px;
+    margin: 12px 0;
+    border-radius: 8px;
+    min-width: 0;
+  }
 `;
 
 const Title = styled.h1`
@@ -35,6 +42,11 @@ const Button = styled.button`
 
   &:hover {
     background: #d09b3a;
+  }
+
+  @media (max-width: 700px) {
+    padding: 8px 12px;
+    font-size: 0.95rem;
   }
 `;
 

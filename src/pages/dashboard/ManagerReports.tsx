@@ -12,14 +12,28 @@ const Card = styled.div`
   padding: 32px;
   max-width: 900px;
   margin: 32px auto;
+  @media (max-width: 700px) {
+    padding: 14px 2px 14px 2px;
+    max-width: 98vw;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
 `;
 const Section = styled.div`
   margin-bottom: 32px;
+  @media (max-width: 700px) {
+    margin-bottom: 18px;
+  }
 `;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
+  font-size: 1rem;
+  @media (max-width: 700px) {
+    font-size: 0.92rem;
+    border-radius: 4px;
+  }
 `;
 const Th = styled.th`
   background: #222;
@@ -46,6 +60,10 @@ const Button = styled.button`
   &:hover {
     background: #e0b04b;
     color: #181818;
+  }
+  @media (max-width: 700px) {
+    padding: 6px 10px;
+    font-size: 0.95rem;
   }
 `;
 

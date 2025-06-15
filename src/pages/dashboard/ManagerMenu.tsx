@@ -13,21 +13,44 @@ const Card = styled.div`
   padding: 32px;
   max-width: 900px;
   margin: 32px auto;
+  @media (max-width: 700px) {
+    padding: 14px 2px 14px 2px;
+    max-width: 98vw;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
 `;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
+  font-size: 1rem;
+  @media (max-width: 700px) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    font-size: 0.92rem;
+    border-radius: 4px;
+  }
 `;
 const Th = styled.th`
   background: #222;
   color: #fff;
   padding: 10px;
+  @media (max-width: 700px) {
+    padding: 7px 4px;
+    font-size: 0.95em;
+  }
 `;
 const Td = styled.td`
   border: 1px solid #eee;
   padding: 10px;
   color: #222;
+  @media (max-width: 700px) {
+    padding: 7px 4px;
+    font-size: 0.95em;
+    word-break: break-word;
+  }
 `;
 const Button = styled.button`
   background: #b71c1c;
@@ -45,6 +68,11 @@ const Button = styled.button`
     background: #e0b04b;
     color: #181818;
   }
+  @media (max-width: 700px) {
+    padding: 7px 10px;
+    font-size: 0.97em;
+    margin-right: 6px;
+  }
 `;
 const Input = styled.input`
   padding: 8px 12px;
@@ -53,6 +81,10 @@ const Input = styled.input`
   font-size: 1rem;
   margin-bottom: 12px;
   width: 100%;
+  @media (max-width: 700px) {
+    padding: 7px 8px;
+    font-size: 0.97em;
+  }
 `;
 
 const mockMenus = [

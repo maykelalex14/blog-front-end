@@ -13,21 +13,44 @@ const Card = styled.div`
   padding: 32px;
   max-width: 900px;
   margin: 32px auto;
+  @media (max-width: 700px) {
+    padding: 14px 2px 14px 2px;
+    max-width: 98vw;
+    margin: 10px 0;
+    border-radius: 8px;
+  }
 `;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
   margin-bottom: 16px;
+  font-size: 1rem;
+  @media (max-width: 700px) {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    font-size: 0.92rem;
+    border-radius: 4px;
+  }
 `;
 const Th = styled.th`
   background: #222;
   color: #fff;
   padding: 10px;
+  @media (max-width: 700px) {
+    padding: 7px 4px;
+    font-size: 0.95em;
+  }
 `;
 const Td = styled.td`
   border: 1px solid #eee;
   padding: 10px;
   color: #222;
+  @media (max-width: 700px) {
+    padding: 7px 4px;
+    font-size: 0.95em;
+    word-break: break-word;
+  }
 `;
 const Status = styled.span<{ status: string }>`
   color: ${({ status }) =>

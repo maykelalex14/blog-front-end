@@ -13,6 +13,10 @@ const MenuGrid = styled.div`
 	width: 100%;
 	max-width: 900px;
 	margin: 0 auto;
+	@media (max-width: 700px) {
+		gap: 16px;
+		padding: 0 4px;
+	}
 `;
 const MenuCard = styled(motion.div)`
 	background: #232526;
@@ -30,6 +34,9 @@ const MenuCard = styled(motion.div)`
 		box-shadow: 0 8px 32px rgba(224, 176, 75, 0.1);
 		background: #181818;
 	}
+	@media (max-width: 700px) {
+		padding: 18px 8px;
+	}
 `;
 const ItemImg = styled.img`
 	width: 100%;
@@ -37,6 +44,10 @@ const ItemImg = styled.img`
 	border-radius: 12px;
 	margin-bottom: 18px;
 	align-self: center;
+	@media (max-width: 700px) {
+		max-width: 120px;
+		margin-bottom: 10px;
+	}
 `;
 const ItemName = styled.h3`
 	font-family: 'Playfair Display', serif;
