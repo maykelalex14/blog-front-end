@@ -15,6 +15,10 @@ const Nav = styled.nav`
   top: 0;
   z-index: 100;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  @media (max-width: 700px) {
+    padding: 0 8px;
+    height: 52px;
+  }
 `;
 const Container = styled.div`
   display: flex;
@@ -23,6 +27,9 @@ const Container = styled.div`
   max-width: 1200px;
   margin: 0 auto;
   justify-content: space-between;
+  @media (max-width: 700px) {
+    max-width: 100vw;
+  }
 `;
 const Logo = styled(Link)`
   font-size: 1.5rem;
@@ -30,11 +37,18 @@ const Logo = styled(Link)`
   color: #fff;
   text-decoration: none;
   letter-spacing: 2px;
+  @media (max-width: 700px) {
+    font-size: 1.1rem;
+    padding: 0 4px;
+  }
 `;
 const NavLinks = styled.div`
   display: flex;
   align-items: center;
   gap: 18px;
+  @media (max-width: 700px) {
+    gap: 8px;
+  }
 `;
 const StyledNavLink = styled(RouterNavLink)`
   color: #fff;
@@ -51,6 +65,10 @@ const StyledNavLink = styled(RouterNavLink)`
   &:hover {
     background: #b71c1c;
   }
+  @media (max-width: 700px) {
+    font-size: 0.95rem;
+    padding: 4px 6px;
+  }
 `;
 const LogoutBtn = styled.button`
   background: #b71c1c;
@@ -65,6 +83,11 @@ const LogoutBtn = styled.button`
   transition: background 0.2s;
   &:hover {
     background: #7f1010;
+  }
+  @media (max-width: 700px) {
+    font-size: 0.95rem;
+    padding: 4px 8px;
+    margin-left: 4px;
   }
 `;
 const MoreMenu = styled.div`
@@ -102,13 +125,6 @@ const MoreLink = styled(StyledNavLink)`
     background: #b71c1c;
     color: #fff;
   }
-`;
-const RoleMsg = styled.div`
-  font-size: 0.95rem;
-  color: #e0b04b;
-  margin-left: 18px;
-  font-weight: 500;
-  letter-spacing: 0.5px;
 `;
 
 const Navbar: React.FC = () => {
@@ -213,11 +229,6 @@ const Navbar: React.FC = () => {
           {!user && <StyledNavLink to="/login">Login</StyledNavLink>}
           {!user && <StyledNavLink to="/signup">Signup</StyledNavLink>}
           {user && <LogoutBtn onClick={handleLogout}>Logout</LogoutBtn>}
-          {user && (
-            <RoleMsg>
-              Logged in as: <b>{user.role}</b>
-            </RoleMsg>
-          )}
         </NavLinks>
       </Container>
     </Nav>
