@@ -7,20 +7,16 @@ const AdminDashboard: React.FC = () => {
 
   // Mock staff data
   const staff = [
-    { name: 'Alice Johnson', role: 'waiter' },
-    { name: 'Brian Smith', role: 'waitress' },
-    { name: 'Carlos Lee', role: 'waiter' },
-    { name: 'Diana Evans', role: 'waitress' },
-    { name: 'Evelyn Turner', role: 'cashier' },
-    { name: 'Frank Miller', role: 'cashier' },
-    { name: 'Grace Kim', role: 'chief' },
-    { name: 'Henry Clark', role: 'waiter' },
+    { name: 'Alice Johnson', role: 'Waiter', email: 'alice@steakz.com', phone: '555-1111' },
+    { name: 'Brian Smith', role: 'Waitress', email: 'brian@steakz.com', phone: '555-2222' },
+    { name: 'Carlos Lee', role: 'Waiter', email: 'carlos@steakz.com', phone: '555-3333' },
+    { name: 'Diana Evans', role: 'Waitress', email: 'diana@steakz.com', phone: '555-4444' },
+    { name: 'Evelyn Turner', role: 'Cashier', email: 'evelyn@steakz.com', phone: '555-5555' },
+    { name: 'Frank Miller', role: 'Cashier', email: 'frank@steakz.com', phone: '555-6666' },
+    { name: 'Grace Kim', role: 'Chef', email: 'grace@steakz.com', phone: '555-7777' },
+    { name: 'Henry Clark', role: 'Waiter', email: 'henry@steakz.com', phone: '555-8888' },
   ];
   const total = staff.length;
-  const waiterCount = staff.filter(s => s.role === 'waiter').length;
-  const waitressCount = staff.filter(s => s.role === 'waitress').length;
-  const cashierCount = staff.filter(s => s.role === 'cashier').length;
-  const chiefCount = staff.filter(s => s.role === 'chief').length;
 
   // Mock order and inventory data for estimations
   const ordersToday = 48;
@@ -77,16 +73,14 @@ const AdminDashboard: React.FC = () => {
       <h3 style={{margin: '32px 0 12px 0', color: '#444'}}>Staff Information</h3>
       <div style={{marginBottom: 16, color: '#222'}}>
         <b>Total Employees:</b> {total} <br />
-        <b>Waiters:</b> {waiterCount} &nbsp;|&nbsp;
-        <b>Waitresses:</b> {waitressCount} &nbsp;|&nbsp;
-        <b>Cashiers:</b> {cashierCount} &nbsp;|&nbsp;
-        <b>Chiefs:</b> {chiefCount}
       </div>
       <Table>
         <thead>
           <tr>
             <Th style={{ color: '#000' }}>Name</Th>
             <Th style={{ color: '#000' }}>Role</Th>
+            <Th style={{ color: '#000' }}>Email</Th>
+            <Th style={{ color: '#000' }}>Phone</Th>
           </tr>
         </thead>
         <tbody>
@@ -95,7 +89,9 @@ const AdminDashboard: React.FC = () => {
             return (
               <Row key={s.name}>
                 <Td style={{ color: '#000' }}>{s.name}</Td>
-                <Td style={{ color: '#000' }}>{s.role.charAt(0).toUpperCase() + s.role.slice(1)}</Td>
+                <Td style={{ color: '#000' }}>{s.role}</Td>
+                <Td style={{ color: '#000' }}>{s.email}</Td>
+                <Td style={{ color: '#000' }}>{s.phone}</Td>
               </Row>
             );
           })}

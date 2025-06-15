@@ -55,7 +55,7 @@ export interface HomeProps {
 // TODO: Students - Add interfaces for error responses and other API responses as needed
 // For example, you might need interfaces for post creation responses or user update responses
 
-export type UserRole = 'admin' | 'manager' | 'customer' | 'chef' | 'branchManager' | 'hqManager';
+export type UserRole = 'admin' | 'manager' | 'customer' | 'chef' | 'branchManager' | 'hqManager' | 'cashier';
 
 export interface RBACUser {
   id: string;

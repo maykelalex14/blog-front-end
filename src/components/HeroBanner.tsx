@@ -1,6 +1,19 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from './HeroBanner.module.css';
+import type { CSSProperties } from 'react';
+
+const bgStyle: CSSProperties = {
+  background: "linear-gradient(120deg, #181818 0%, #232526 100%), url('/steakhouse-bg.jpg') center center/cover no-repeat",
+  width: "100vw",
+  minHeight: "70vh",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  color: "#fff",
+  position: "relative" as CSSProperties['position'],
+  overflow: "hidden"
+};
 
 const HeroBanner: React.FC = () => {
   const navigate = useNavigate();
@@ -8,7 +21,7 @@ const HeroBanner: React.FC = () => {
   return (
     <section
       id="hero"
-      className={styles.heroBanner}
+      style={bgStyle}
     >
       <div className={styles.overlay}>
         <h1 className={styles.title}>Steakz</h1>

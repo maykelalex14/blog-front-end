@@ -18,10 +18,17 @@ export const LoginLogContext = createContext<LoginLogContextType>({
 });
 
 export const LoginLogProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [logs, setLogs] = useState<LoginLogEntry[]>([]);
+  const [logs, setLogs] = useState<LoginLogEntry[]>(() => {
+    const stored = localStorage.getItem('auditLogs');
+    return stored ? JSON.parse(stored) : [];
+  });
 
   const addLog = (entry: LoginLogEntry) => {
-    setLogs((prev) => [entry, ...prev]);
+    setLogs((prev) => {
+      const updated = [entry, ...prev];
+      localStorage.setItem('auditLogs', JSON.stringify(updated));
+      return updated;
+    });
   };
 
   return (

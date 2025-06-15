@@ -24,16 +24,18 @@ interface AuthContextType {
   logout: () => void;
 }
 
-export const AuthContext = createContext<AuthContextType>({
+export const AuthContext = createContext<AuthContextType & { loading: boolean }>({
   user: null,
   token: null,
   login: () => {},
   logout: () => {},
+  loading: true,
 });
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
   const [token, setToken] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
   const { addLog } = React.useContext(LoginLogContext);
 
   useEffect(() => {
@@ -44,7 +46,18 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
       setToken(storedToken);
       setUser(JSON.parse(storedUser));
     }
+    setLoading(false);
   }, []);
+
+  // Always restore user from localStorage if missing (for all roles, including cashier)
+  useEffect(() => {
+    if (!user) {
+      const storedUser = localStorage.getItem('user');
+      if (storedUser) {
+        setUser(JSON.parse(storedUser));
+      }
+    }
+  }, [user]);
 
   const login = (token: string, user: RBACUser) => {
     setToken(token);
@@ -64,10 +77,13 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) =>
     setUser(null);
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    // Optionally, clear cookies if you use them for auth (not shown here)
   };
 
+  if (loading) return <div>Loading...</div>;
+
   return (
-    <AuthContext.Provider value={{ user, token, login, logout }}>
+    <AuthContext.Provider value={{ user, token, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

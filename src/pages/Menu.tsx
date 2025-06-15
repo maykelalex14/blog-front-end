@@ -1,16 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
+import { MenuContext } from '../context/MenuContext';
+import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import Cart from '../components/Cart';
-
-const menuItems = [
-	{ name: 'Ribeye Steak', desc: 'Juicy, marbled, flame-grilled perfection.', price: 38 },
-	{ name: 'Filet Mignon', desc: 'Tenderloin, melt-in-your-mouth, classic.', price: 42 },
-	{ name: 'NY Strip', desc: 'Bold, beefy, expertly seasoned.', price: 36 },
-	{ name: 'Wagyu Burger', desc: 'Premium beef, aged cheddar, brioche bun.', price: 24 },
-	{ name: 'Truffle Fries', desc: 'Hand-cut, parmesan, truffle oil.', price: 12 },
-	{ name: 'Caesar Salad', desc: 'Crisp romaine, house dressing, croutons.', price: 14 },
-];
 
 const MenuGrid = styled.div`
 	display: grid;
@@ -36,6 +30,13 @@ const MenuCard = styled(motion.div)`
 		box-shadow: 0 8px 32px rgba(224, 176, 75, 0.1);
 		background: #181818;
 	}
+`;
+const ItemImg = styled.img`
+	width: 100%;
+	max-width: 220px;
+	border-radius: 12px;
+	margin-bottom: 18px;
+	align-self: center;
 `;
 const ItemName = styled.h3`
 	font-family: 'Playfair Display', serif;
@@ -75,53 +76,85 @@ const AddButton = styled.button`
 `;
 const CartButton = styled.button`
 	position: fixed;
-	bottom: 32px;
+	top: 50%;
 	right: 32px;
-	background: #b71c1c;
-	color: #fff;
-	border: none;
-	border-radius: 50%;
-	width: 60px;
-	height: 60px;
-	font-size: 2rem;
-	box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+	transform: translateY(-50%);
+	background: #fff;
+	color: #b71c1c;
+	border: 3px solid #e0b04b;
+	border-radius: 32px;
+	width: auto;
+	min-width: 64px;
+	height: 64px;
+	font-size: 2.2rem;
+	box-shadow: 0 4px 24px rgba(224, 176, 75, 0.22);
 	cursor: pointer;
-	z-index: 100;
+	z-index: 2000;
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	transition: background 0.2s;
+	padding: 0 24px 0 16px;
+	gap: 10px;
+	font-weight: bold;
+	letter-spacing: 0.5px;
+	transition: background 0.2s, color 0.2s, border 0.2s;
+	outline: none;
 	&:hover {
 		background: #e0b04b;
-		color: #181818;
+		color: #fff;
+		border: 3px solid #b71c1c;
 	}
+	@media (max-width: 600px) {
+		right: 8px;
+		min-width: 48px;
+		height: 48px;
+		font-size: 1.4rem;
+		padding: 0 12px 0 8px;
+	}
+`;
+const CartBadge = styled.span`
+	position: absolute;
+	top: 8px;
+	right: 8px;
+	background: #e0b04b;
+	color: #b71c1c;
+	font-weight: bold;
+	font-size: 1.1rem;
+	border-radius: 50%;
+	width: 26px;
+	height: 26px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	box-shadow: 0 1px 4px rgba(0, 0, 0, 0.12);
 `;
 
 const Menu: React.FC = () => {
-	const [cart, setCart] = useState<{ name: string; price: number; quantity: number; id: string }[]>([]);
+	const { menu } = useContext(MenuContext);
+	const { cart, setCart } = useCart();
 	const [cartOpen, setCartOpen] = useState(false);
+	const navigate = useNavigate();
 
 	// Reset cartOpen when the Menu page is mounted to fix re-navigation issue
 	useEffect(() => {
 		setCartOpen(false);
 	}, []);
 
-	const addToCart = (item: { name: string; price: number }) => {
+	const addToCart = (item: { id: number; name: string; price: number }) => {
 		setCart((prev) => {
-			const found = prev.find((i) => i.name === item.name);
+			const found = prev.find((i) => i.id === String(item.id));
 			if (found) {
-				return prev.map((i) => (i.name === item.name ? { ...i, quantity: i.quantity + 1 } : i));
+				return prev.map((i) => (i.id === String(item.id) ? { ...i, quantity: i.quantity + 1 } : i));
 			}
-			return [...prev, { ...item, quantity: 1, id: item.name }];
+			return [...prev, { ...item, quantity: 1, id: String(item.id) }];
 		});
 	};
 
 	const total = cart.reduce((sum, i) => sum + i.price * i.quantity, 0);
 
 	const handleCheckout = () => {
-		alert('Order placed! (Demo)');
-		setCart([]);
 		setCartOpen(false);
+		navigate('/checkout'); // Redirect to checkout page
 		// When an order is fulfilled, update inventory usage here (future integration)
 		// Example: deductInventoryForOrder(order: Order)
 	};
@@ -140,9 +173,9 @@ const Menu: React.FC = () => {
 				Menu
 			</h2>
 			<MenuGrid>
-				{menuItems.map((item, i) => (
+				{menu.filter((item) => item.available).map((item, i) => (
 					<MenuCard
-						key={item.name}
+						key={item.id}
 						initial={{ opacity: 0, y: 40 }}
 						whileInView={{ opacity: 1, y: 0 }}
 						viewport={{ once: true }}
@@ -150,6 +183,7 @@ const Menu: React.FC = () => {
 						tabIndex={0}
 						aria-label={item.name}
 					>
+						<ItemImg src={item.img} alt={item.name} />
 						<ItemName>{item.name}</ItemName>
 						<ItemDesc>{item.desc}</ItemDesc>
 						<ItemPrice>${item.price}</ItemPrice>
@@ -157,8 +191,12 @@ const Menu: React.FC = () => {
 					</MenuCard>
 				))}
 			</MenuGrid>
-			<CartButton aria-label="Open Cart" onClick={() => setCartOpen(true)}>
-				🛒
+			<CartButton aria-label="Open Cart" onClick={() => setCartOpen(true)} style={{ position: 'fixed' }}>
+				<span style={{ position: 'relative', display: 'inline-block', fontSize: '2.2rem', marginRight: 6, filter: 'drop-shadow(0 2px 2px #e0b04b)' }}>
+					🛒
+					{cart.length > 0 && <CartBadge>{cart.reduce((sum, i) => sum + i.quantity, 0)}</CartBadge>}
+				</span>
+				<span style={{ fontWeight: 700, fontSize: '1.1rem', color: '#b71c1c', letterSpacing: 0.5 }}>View Cart</span>
 			</CartButton>
 			<Cart
 				open={cartOpen}

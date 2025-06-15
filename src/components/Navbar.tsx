@@ -1,7 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-scroll';
 import styled, { css } from 'styled-components';
 import { motion } from 'framer-motion';
+import { AuthContext } from '../context/AuthContext';
+import { useNavigate } from 'react-router-dom';
 
 const NavbarContainer = styled(motion.nav)<{scrolled: boolean}>`
   position: sticky;
@@ -93,17 +95,11 @@ const MobileMenu = styled(motion.ul)`
   }
 `;
 
-const navItems = [
-  { to: 'hero', label: 'Home' },
-  { to: 'about', label: 'About' },
-  { to: 'menu', label: 'Menu' },
-  { to: 'reservation', label: 'Reservations' },
-  { to: 'contact', label: 'Contact' },
-];
-
 const Navbar: React.FC = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -111,25 +107,61 @@ const Navbar: React.FC = () => {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
+  // Manager-specific nav items
+  const managerNavItems = [
+    { label: 'Reports', path: '/dashboard/manager?tab=Reports' },
+    { label: 'Menu', path: '/dashboard/manager?tab=Menu' },
+    { label: 'Orders', path: '/dashboard/manager?tab=Orders' },
+    { label: 'Kitchen', path: '/dashboard/manager?tab=Kitchen' },
+    { label: 'Inventory', path: '/dashboard/manager?tab=Inventory' },
+    { label: 'Staff', path: '/dashboard/manager?tab=Staff' },
+    { label: 'Feedback', path: '/dashboard/manager?tab=Feedback' },
+  ];
+
+  // Default nav items
+  const navItems = [
+    { to: 'hero', label: 'Home' },
+    { to: 'about', label: 'About' },
+    { to: 'menu', label: 'Menu' },
+    { to: 'reservation', label: 'Reservations' },
+    { to: 'contact', label: 'Contact' },
+  ];
+
   return (
     <NavbarContainer scrolled={scrolled} initial={{ y: -80 }} animate={{ y: 0 }}>
       <NavContent>
         <Logo to="hero" smooth duration={600} offset={-70} spy>Steakz</Logo>
         <NavLinks className="desktop-nav">
-          {navItems.map((item) => (
-            <li key={item.to}>
-              <NavLink
-                to={item.to}
-                smooth
-                duration={600}
-                offset={-70}
-                spy
-                onClick={() => setMobileOpen(false)}
-              >
-                {item.label}
-              </NavLink>
-            </li>
-          ))}
+          {user?.role === 'manager'
+            ? managerNavItems.map((item) => (
+                <li key={item.label}>
+                  <a
+                    href={item.path}
+                    style={{ color: '#fff8f0', fontSize: '1.1rem', fontWeight: 500, textDecoration: 'none', cursor: 'pointer' }}
+                    onClick={e => {
+                      e.preventDefault();
+                      navigate(item.path);
+                      setMobileOpen(false);
+                    }}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))
+            : navItems.map((item) => (
+                <li key={item.to}>
+                  <NavLink
+                    to={item.to}
+                    smooth
+                    duration={600}
+                    offset={-70}
+                    spy
+                    onClick={() => setMobileOpen(false)}
+                  >
+                    {item.label}
+                  </NavLink>
+                </li>
+              ))}
         </NavLinks>
         <Hamburger onClick={() => setMobileOpen((o) => !o)} aria-label="Toggle navigation">
           <Bar />
@@ -142,20 +174,36 @@ const Navbar: React.FC = () => {
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: -100, opacity: 0 }}
           >
-            {navItems.map((item) => (
-              <li key={item.to}>
-                <NavLink
-                  to={item.to}
-                  smooth
-                  duration={600}
-                  offset={-70}
-                  spy
-                  onClick={() => setMobileOpen(false)}
-                >
-                  {item.label}
-                </NavLink>
-              </li>
-            ))}
+            {user?.role === 'manager'
+              ? managerNavItems.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.path}
+                      style={{ color: '#fff8f0', fontSize: '1.1rem', fontWeight: 500, textDecoration: 'none', cursor: 'pointer' }}
+                      onClick={e => {
+                        e.preventDefault();
+                        navigate(item.path);
+                        setMobileOpen(false);
+                      }}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))
+              : navItems.map((item) => (
+                  <li key={item.to}>
+                    <NavLink
+                      to={item.to}
+                      smooth
+                      duration={600}
+                      offset={-70}
+                      spy
+                      onClick={() => setMobileOpen(false)}
+                    >
+                      {item.label}
+                    </NavLink>
+                  </li>
+                ))}
           </MobileMenu>
         )}
       </NavContent>

@@ -1,0 +1,131 @@
+import React, { useContext } from 'react';
+import styled from 'styled-components';
+import { OrdersContext } from '../../context/OrdersContext';
+
+const Card = styled.div`
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  padding: 32px;
+  max-width: 900px;
+  margin: 32px auto;
+`;
+const Table = styled.table`
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 16px;
+`;
+const Th = styled.th`
+  background: #222;
+  color: #fff;
+  padding: 10px;
+`;
+const Td = styled.td`
+  border: 1px solid #eee;
+  padding: 10px;
+  color: #222;
+`;
+const Status = styled.span<{ status: string }>`
+  color: ${({ status }) =>
+    status === 'pending' ? '#b71c1c' :
+    status === 'in_progress' ? '#e0b04b' :
+    '#2e7d32'};
+  font-weight: 600;
+`;
+
+interface ManagerOrdersProps {
+  hideKitchenAndCashier?: boolean;
+  allBranches?: boolean;
+}
+
+const mockOrdersByBranch = [
+  {
+    branch: 'Downtown',
+    orders: [
+      { id: 1, items: [{ name: 'Ribeye', qty: 2 }], status: 'pending', placedAt: '10:00', updatedAt: '10:05', kitchen: 'Alice', cashier: 'Bob' },
+    ],
+  },
+  {
+    branch: 'Uptown',
+    orders: [
+      { id: 2, items: [{ name: 'Salad', qty: 1 }], status: 'in_progress', placedAt: '10:10', updatedAt: '10:15', kitchen: 'Carol', cashier: 'Dave' },
+    ],
+  },
+];
+
+const ManagerOrders: React.FC<ManagerOrdersProps> = ({ hideKitchenAndCashier, allBranches }) => {
+  const { orders } = useContext(OrdersContext);
+
+  if (allBranches) {
+    return (
+      <Card>
+        <h2 style={{ color: '#222', marginBottom: 24 }}>Orders (All Branches)</h2>
+        {mockOrdersByBranch.map((branchData, idx) => (
+          <div key={idx} style={{marginBottom:32}}>
+            <h3 style={{color:'#b71c1c',marginBottom:8}}>{branchData.branch} Branch</h3>
+            <Table>
+              <thead>
+                <tr>
+                  <Th>Order #</Th>
+                  <Th>Items</Th>
+                  <Th>Status</Th>
+                  <Th>Placed At</Th>
+                  <Th>Last Update</Th>
+                  {!hideKitchenAndCashier && <Th>Kitchen Staff</Th>}
+                  {!hideKitchenAndCashier && <Th>Cashier</Th>}
+                </tr>
+              </thead>
+              <tbody>
+                {branchData.orders.map(order => (
+                  <tr key={order.id}>
+                    <Td>{order.id}</Td>
+                    <Td>{order.items.map(i => `${i.name} x${i.qty}`).join(', ')}</Td>
+                    <Td><Status status={order.status}>{order.status.replace('_', ' ')}</Status></Td>
+                    <Td>{order.placedAt}</Td>
+                    <Td>{order.updatedAt}</Td>
+                    {!hideKitchenAndCashier && <Td>{order.kitchen}</Td>}
+                    {!hideKitchenAndCashier && <Td>{order.cashier}</Td>}
+                  </tr>
+                ))}
+              </tbody>
+            </Table>
+          </div>
+        ))}
+      </Card>
+    );
+  }
+
+  return (
+    <Card>
+      <h2 style={{ color: '#222', marginBottom: 24 }}>Orders</h2>
+      <Table>
+        <thead>
+          <tr>
+            <Th>Order #</Th>
+            <Th>Items</Th>
+            <Th>Status</Th>
+            <Th>Placed At</Th>
+            <Th>Last Update</Th>
+            {!hideKitchenAndCashier && <Th>Kitchen Staff</Th>}
+            {!hideKitchenAndCashier && <Th>Cashier</Th>}
+          </tr>
+        </thead>
+        <tbody>
+          {orders.map(order => (
+            <tr key={order.id}>
+              <Td>{order.id}</Td>
+              <Td>{order.items.map(i => `${i.name} x${i.qty}`).join(', ')}</Td>
+              <Td><Status status={order.status}>{order.status.replace('_', ' ')}</Status></Td>
+              <Td>{order.placedAt}</Td>
+              <Td>{order.updatedAt}</Td>
+              {!hideKitchenAndCashier && <Td>{order.kitchen}</Td>}
+              {!hideKitchenAndCashier && <Td>{order.cashier}</Td>}
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </Card>
+  );
+};
+
+export default ManagerOrders;

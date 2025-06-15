@@ -30,12 +30,12 @@ const Cart: React.FC<CartProps> = ({ items, total, onCheckout, onClose, open }) 
           {items.map((item) => (
             <CartItemRow key={item.id}>
               <span>{item.name} x{item.quantity}</span>
-              <span>AED {item.price * item.quantity}</span>
+              <span>${(item.price * item.quantity).toFixed(2)}</span>
             </CartItemRow>
           ))}
         </CartList>
       )}
-      <CartTotal>Total: AED {total}</CartTotal>
+      <CartTotal>Total: ${total.toFixed(2)}</CartTotal>
       <CheckoutBtn disabled={items.length === 0} onClick={onCheckout}>Checkout</CheckoutBtn>
     </Drawer>
   );

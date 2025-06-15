@@ -1,26 +1,19 @@
 import React from 'react';
 import styled from 'styled-components';
-import { InventoryItem } from '../types';
 
-// Mock inventory data
-const mockInventory: InventoryItem[] = [
-  { id: 'beef', name: 'Beef', quantity: 120, unit: 'kg' },
-  { id: 'potato', name: 'Potato', quantity: 50, unit: 'kg' },
-  { id: 'oil', name: 'Oil', quantity: 20, unit: 'L' },
+const inventory = [
+  { name: 'Beef', quantity: 18, unit: 'kg' },
+  { name: 'Potatoes', quantity: 9, unit: 'kg' },
+  { name: 'Salad Greens', quantity: 6, unit: 'kg' },
+  { name: 'Cheese', quantity: 4, unit: 'kg' },
+  { name: 'Wine', quantity: 12, unit: 'bottles' },
 ];
 
-const Card = styled.div`
-  background: #fff;
-  border-radius: 12px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-  padding: 32px;
-  max-width: 900px;
-  margin: 32px auto;
-`;
 const Table = styled.table`
   width: 100%;
   border-collapse: collapse;
-  margin-bottom: 16px;
+  margin: 32px auto;
+  max-width: 600px;
 `;
 const Th = styled.th`
   background: #222;
@@ -34,19 +27,19 @@ const Td = styled.td`
 `;
 
 const Inventory: React.FC = () => (
-  <Card>
-    <h2 style={{ color: '#222', marginBottom: 24 }}>Inventory</h2>
+  <div style={{ padding: '40px 0' }}>
+    <h2 style={{ textAlign: 'center', color: '#b71c1c', fontSize: '2.2rem', marginBottom: 32 }}>Inventory</h2>
     <Table>
       <thead>
         <tr>
-          <Th>Ingredient</Th>
+          <Th>Item</Th>
           <Th>Quantity</Th>
           <Th>Unit</Th>
         </tr>
       </thead>
       <tbody>
-        {mockInventory.map((item) => (
-          <tr key={item.id}>
+        {inventory.map(item => (
+          <tr key={item.name}>
             <Td>{item.name}</Td>
             <Td>{item.quantity}</Td>
             <Td>{item.unit}</Td>
@@ -54,8 +47,7 @@ const Inventory: React.FC = () => (
         ))}
       </tbody>
     </Table>
-    {/* In the future, show inventory usage based on fulfilled orders here */}
-  </Card>
+  </div>
 );
 
 export default Inventory;

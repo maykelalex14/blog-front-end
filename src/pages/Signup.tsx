@@ -1,6 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../context/AuthContext';
+import { LoginLogContext } from '../context/LoginLogContext';
+import { RegisteredUsersContext } from '../context/RegisteredUsersContext';
 import { UserRole } from '../types';
 import styled from 'styled-components';
 
@@ -54,25 +56,26 @@ const Signup: React.FC = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const { login: authLogin } = useContext(AuthContext);
+  const { addLog } = useContext(LoginLogContext);
+  const { users: registeredCustomers, addUser } = useContext(RegisteredUsersContext);
   const navigate = useNavigate();
-
-  // Demo: assign role based on username for mock signup
-  const getRole = (username: string) => {
-    if (username.toLowerCase() === 'admin') return 'admin';
-    if (username.toLowerCase() === 'manager') return 'manager';
-    return 'customer';
-  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (username && password) {
+      if (registeredCustomers.some(u => u.username === username)) {
+        setError('You are already registered. Please log in.');
+        return;
+      }
       const rbacUser = {
         id: 'mock-' + username,
         name: username,
-        role: getRole(username) as UserRole,
+        role: 'customer' as UserRole, // force lowercase 'customer' role
       };
       authLogin('mock-token', rbacUser);
-      navigate('/dashboard');
+      addUser({ username, password });
+      addLog({ username, role: 'customer', time: new Date().toLocaleString(), status: 'success' });
+      navigate('/'); // redirect to home page for customers
     } else {
       setError('Signup failed');
     }

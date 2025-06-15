@@ -57,7 +57,7 @@ const AdminSettings: React.FC = () => {
   return (
     <div className="container mx-auto py-8 px-2">
       <div className="bg-white rounded-lg shadow p-6">
-        <div className="flex gap-2 mb-6 border-b">
+        <div className="flex gap-2 mb-6 border-b-0">
           {tabList.map(t => (
             <button
               key={t.key}
