@@ -125,6 +125,17 @@ const Login: React.FC = () => {
       navigate('/dashboard/cashier/orders'); // Redirect cashier to Order Management as default
       return;
     }
+    if (username === 'chef' && password === 'chef123') {
+      const rbacUser = {
+        id: 'chef',
+        name: 'chef',
+        role: 'chef' as UserRole,
+      };
+      authLogin('mock-token', rbacUser);
+      addLog({ username: 'chef', role: 'chef', time: now, status: 'success' });
+      navigate('/dashboard/chef/orders');
+      return;
+    }
     if (username && password) {
       // Only allow login for registered customers with correct credentials
       if (isRegistered(username, password)) {

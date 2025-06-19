@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
+import jsPDF from 'jspdf';
 
 const Container = styled.div`
   max-width: 1200px;
@@ -98,6 +99,37 @@ const Reports: React.FC = () => {
   const [branch, setBranch] = useState('All');
   const [food, setFood] = useState('All');
   const [payment, setPayment] = useState('All');
+
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.text('Admin Reports', 10, 10);
+    doc.text('Global Overview', 10, 20);
+    doc.text('Orders Placed: 1,234', 10, 30);
+    doc.text('Revenue Generated: £45,000', 10, 40);
+    doc.text('Customers Served: 980', 10, 50);
+    doc.text('Active Users: Cashiers: 5, Managers: 3, Customers: 200', 10, 60);
+    doc.save('report.pdf');
+  };
+
+  const exportToCSV = () => {
+    alert('CSV export is not implemented in this demo.');
+  };
+
+  const printSummary = () => {
+    window.print();
+  };
+
+  const emailReport = () => {
+    alert('Email functionality is not implemented in frontend-only mode.');
+  };
+
+  const saveFilter = () => {
+    alert('Filter saved!');
+  };
+
+  const scheduleReport = () => {
+    alert('Report scheduled!');
+  };
 
   return (
     <Container>
@@ -198,10 +230,10 @@ const Reports: React.FC = () => {
       {/* 7. Export & Share Reports */}
       <Section>
         <SectionTitle>Export & Share Reports</SectionTitle>
-        <Button>Export to PDF</Button>
-        <Button>Export to CSV</Button>
-        <Button>Email Report</Button>
-        <Button>Print Summary</Button>
+        <Button onClick={exportToPDF}>Export to PDF</Button>
+        <Button onClick={exportToCSV}>Export to CSV</Button>
+        <Button onClick={emailReport}>Email Report</Button>
+        <Button onClick={printSummary}>Print Summary</Button>
       </Section>
       {/* 8. Custom Reports */}
       <Section>
@@ -209,8 +241,8 @@ const Reports: React.FC = () => {
         <form style={{display:'flex',gap:12,flexWrap:'wrap',marginBottom:12}}>
           <Input type="text" placeholder="Custom filter (e.g. weekends, London)" style={{minWidth:220}} />
           <Button type="button">Apply</Button>
-          <Button type="button">Save Filter</Button>
-          <Button type="button">Schedule Report</Button>
+          <Button type="button" onClick={saveFilter}>Save Filter</Button>
+          <Button type="button" onClick={scheduleReport}>Schedule Report</Button>
         </form>
         <div style={{color:'#e0b04b'}}>Set up custom filters and schedule automated reports for any scenario.</div>
       </Section>

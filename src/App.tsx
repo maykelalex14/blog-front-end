@@ -50,6 +50,7 @@ import ManagerMenu from './pages/dashboard/ManagerMenu';
 import ManagerInventory from './pages/dashboard/ManagerInventory';
 import ReservationForm from './components/ReservationForm';
 import Reservations from './pages/Reservations';
+import ChefDashboard from './pages/ChefDashboard';
 
 const NotFound: React.FC = () => (
   <div style={{ minHeight: '60vh', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', color: '#b71c1c', fontWeight: 700 }}>
@@ -201,6 +202,8 @@ const App: React.FC = () => {
                                 <Route path="/reports" element={user && user.role === 'admin' ? <Reports /> : <Forbidden />} />
                                 <Route path="/admin/staff" element={user && user.role === 'admin' ? <AdminStaff /> : <Forbidden />} />
                                 <Route path="/admin/menu-management" element={user && user.role === 'admin' ? <AdminMenuManagement /> : <Forbidden />} />
+                                {/* CHEF: Only chef dashboard */}
+                                <Route path="/dashboard/chef/orders" element={user?.role === 'chef' ? <ChefDashboard /> : <Forbidden />} />
                                 <Route path="*" element={<NotFound />} />
                               </Routes>
                             )

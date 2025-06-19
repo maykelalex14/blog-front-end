@@ -4,13 +4,14 @@ import styled from 'styled-components';
 import { motion } from 'framer-motion';
 
 const menuItems = [
-  { name: 'Ribeye Steak', desc: 'Juicy, marbled, flame-grilled perfection.', price: '$38' },
-  { name: 'Filet Mignon', desc: 'Tenderloin, melt-in-your-mouth, classic.', price: '$42' },
-  { name: 'NY Strip', desc: 'Bold, beefy, expertly seasoned.', price: '$36' },
-  { name: 'Wagyu Burger', desc: 'Premium beef, aged cheddar, brioche bun.', price: '$24' },
-  { name: 'Truffle Fries', desc: 'Hand-cut, parmesan, truffle oil.', price: '$12' },
-  { name: 'Caesar Salad', desc: 'Crisp romaine, house dressing, croutons.', price: '$14' },
+  { name: 'Ribeye Steak', desc: 'Juicy, marbled, flame-grilled perfection.', price: '$38', image: '/menu/ribeyesteak.jpg' },
+  { name: 'Filet Mignon', desc: 'Tenderloin, melt-in-your-mouth, classic.', price: '$42', image: '/menu/filetmignon.jpg' },
+  { name: 'NY Strip', desc: 'Bold, beefy, expertly seasoned.', price: '$36', image: '/menu/NYstripe.jpg' },
+  { name: 'Wagyu Burger', desc: 'Premium beef, aged cheddar, brioche bun.', price: '$24', image: '/menu/burger.jpg' },
+  { name: 'Truffle Fries', desc: 'Hand-cut, parmesan, truffle oil.', price: '$12', image: '/menu/trufflefries.jpeg' },
+  { name: 'Caesar Salad', desc: 'Crisp romaine, house dressing, croutons.', price: '$14', image: '/menu/caesarsalad.jpg' },
 ];
+const fallbackImg = '/menu/burger.jpg';
 
 const MenuGrid = styled.div`
   display: grid;
@@ -72,6 +73,33 @@ const Menu: React.FC = () => (
           tabIndex={0}
           aria-label={item.name}
         >
+          <div style={{position:'relative',width:'100%',height:220,display:'flex',alignItems:'center',justifyContent:'center',overflow:'hidden'}}>
+            <img 
+              src={item.image} 
+              alt={item.name}
+              style={{ width: 'auto', maxWidth: '100%', height: 200, objectFit: 'contain', borderRadius: 12, marginBottom: 16, background:'#222' }} 
+              onError={e => {
+                console.error(`Image failed to load: ${item.image}`);
+                (e.currentTarget as HTMLImageElement).src = fallbackImg;
+                e.currentTarget.alt = `Image not found: ${item.image}`;
+                if (!e.currentTarget.nextSibling) {
+                  const overlay = document.createElement('div');
+                  overlay.textContent = 'Image not found';
+                  overlay.style.position = 'absolute';
+                  overlay.style.top = '50%';
+                  overlay.style.left = '50%';
+                  overlay.style.transform = 'translate(-50%, -50%)';
+                  overlay.style.background = 'rgba(183,28,28,0.9)';
+                  overlay.style.color = '#fff';
+                  overlay.style.padding = '8px 16px';
+                  overlay.style.borderRadius = '8px';
+                  overlay.style.fontWeight = 'bold';
+                  overlay.style.zIndex = '2';
+                  e.currentTarget.parentElement?.appendChild(overlay);
+                }
+              }}
+            />
+          </div>
           <ItemName>{item.name}</ItemName>
           <ItemDesc>{item.desc}</ItemDesc>
           <ItemPrice>{item.price}</ItemPrice>
